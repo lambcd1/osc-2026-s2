@@ -1,0 +1,5 @@
+email,birth_date,groups,shared_folder
+alice.smith@example.com,1990/06/15,sudo:dev,/opt/staffData
+bob.jones@example.com,1985/11/02,dev,/opt/staffData
+carol.white@example.com,2000/03/22,intern,/opt/internData
+dave.nguyen@example.com,1978/09/30,dev:docker,/opt/staffData
