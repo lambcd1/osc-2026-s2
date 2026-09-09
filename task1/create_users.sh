@@ -23,6 +23,7 @@ if [[ "$input" == http://* || "$input" == https://* ]]; then
 
 	if [[ -f "$filename" ]]; then
 		echo "Remote file downloaded successfully: $filename"
+		csv_file="$filename"
 	else
 		echo "ERROR: Failed to download remote file"
 	fi
@@ -51,8 +52,12 @@ echo "CSV header:"
 echo "$header"
 
 	# Internal Field Seperator parses the CSV, 
-tail -n +2 "$csv_file" | while IFS=',' read -r -a fields
+while IFS=',' read -r -a fields
 do
+	# refresh each time so previous one doesnt pollute current one
+	subgroup=""
+	shared_folder=""
+
 	email="${fields[0]}"
 	birth_date="${fields[1]}"
 	group="${fields[2]}"
@@ -108,7 +113,10 @@ do
 	default_password="${birth_year}${birth_month}"
 
 	echo "	Default password: $default_password"
-done
+
+	# right arrow outputs the bracketed command
+	# left arrow puts it into the loop
+done < <(tail -n +2 "$csv_file")
 
 
 
