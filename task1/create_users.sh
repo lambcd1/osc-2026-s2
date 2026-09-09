@@ -81,6 +81,9 @@ do
 	echo "	Shared folder: $shared_folder"
 
 	# =~ checks if right side matches left side of equals (regex)
+	# note:
+	# this does not check if the months and days are valid (eg 99)
+	# this is reallly just checking if the characters are num and the delimiter is slash
 	if [[ "$birth_date" =~ ^[0-9]{4}/[0-9]{2}/[0-9]{2}$ ]]; then
 		echo "	Birth date format IS valid"
 	else
