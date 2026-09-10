@@ -354,6 +354,16 @@ log "Script completed successfully"
 
 # Potential Problems:
 #
+# CSV validation: This is currently built around the data
+#               coming in the format offered by the
+#		users.csv download from the OP BIT link.
+#
+#		If the testing during code defense
+#		requires a different file, then it
+#		is unprepared for that.
+#
+#		Unsure about its priority with limited time
+#		compared to Task 2 etc...
 #
 
 
