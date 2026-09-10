@@ -181,6 +181,8 @@ while IFS=',' read -r -a fields
 do
 	email="${fields[0]}"
 	birth_date="${fields[1]}"
+	group="${fields[2]}"
+	shared_folder="${fields[3]}"
 
 	username=$(get_username "$email")
 
