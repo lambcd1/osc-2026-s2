@@ -158,6 +158,16 @@ do
 	log "Groups: $group"
 	log "Shared folder: $shared_folder"
 
+	# check email format
+	if [[ "$email" =~ ^[^@]+@[^@]+\.[^@]+$ ]]; then
+		echo "	Email format IS valid"
+		log "SUCCESS: Email format is valid for $email"
+	else
+		echo "	ERROR: Invalid email format"
+		log "ERROR: Invalid email format: $email"
+		continue
+	fi
+
 	# formats date and checks if its valid
 	if date -d "$birth_date" '+%Y/%m/%d' >/dev/null 2>&1 &&
 		[[ "$(date -d "$birth_date" '+%Y/%m/%d')" == "$birth_date" ]]; then
