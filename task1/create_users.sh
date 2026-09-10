@@ -18,14 +18,17 @@ log "Script started"
 if [[ $# -eq 1 ]]; then
 	input="$1"
 	echo "Input received: $input"
+	log "Input received: $input"
 else
 	read -rp "Enter a local CSV path or URI: " input
 	echo "Input received: $input"
+	log "Input received: $input"
 fi
 
 # Check which input type (web or local)
 if [[ "$input" == http://* || "$input" == https://* ]]; then
 	echo "Remote URI detected: $input"
+	log "Remote URI detected: $input"
 
 	# download to the same directory as this with curl
 	filename=$(basename "$input")
@@ -33,19 +36,24 @@ if [[ "$input" == http://* || "$input" == https://* ]]; then
 
 	if [[ $? -eq 0 && -f "$script_dir/$filename" ]]; then
 		echo "Remote file downloaded successfully: $filename"
+		log "SUCCESS: Remote file downloaded successfully: $filename"
 		csv_file="$script_dir/$filename"
 	else
 		echo "ERROR: Failed to download remote file"
+		log "ERROR: Failed to download remote file: $input"
 		exit 1
 	fi
 else
 	echo "Local file detected: $input"
+	log "Local file detected: $input"
 
 	if [[ -f "$input" ]]; then
 		echo "Local file exists"
+		log "SUCCESS: Local file exists: $input"
 		csv_file="$input"
 	else
 		echo "ERROR: Local file does not exist"
+		log "ERROR: Local file does not exist: $input"
 		exit 1
 	fi
 fi
@@ -53,22 +61,26 @@ fi
 # Check csv file is not empty, read the header
 if [[ ! -s "$csv_file" ]]; then
 	echo "ERROR: CSV file IS empty"
+	log "ERROR: CSV file is empty: $csv_file"
 	exit 1
 fi
 
 echo "CSV file IS NOT empty"
+log "SUCCESS: CSV file is not empty: $csv_file"
 
 header=$(head -n 1 "$csv_file")
 
 echo "CSV header:"
 echo "$header"
+log "CSV header read: $header"
 
 if [[ "$header" != "email,birth_date,groups,shared_folder" ]]; then
 	echo "ERROR: Invalid CSV header"
+	log "ERROR: Invalid CSV header"
 	exit 1
 fi
 echo "CSV header is valid"
-
+log "SUCCESS: CSV header is valid"
 
 get_username() {
 	# -d cut delimiter
@@ -96,11 +108,14 @@ create_group() {
 
 	if getent group "$group_name" &>/dev/null; then
 		echo "	Group already exists: $group_name"
+		log "INFO: Group already exists: $group_name"
 	else
 		if sudo groupadd "$group_name"; then
 			echo "	Group created: $group_name"
+			log "SUCCESS: Group created: $group_name"
 		else
 			echo "	ERROR: Failed to create group: $group_name"
+			log "ERROR: Failed to create group: $group_name"
 			# return 1 for failure
 			return 1
 		fi
@@ -138,19 +153,26 @@ do
 	echo "	Birth Date: $birth_date"
 	echo "	Groups: $group"
 	echo "	Shared folder: $shared_folder"
+	log "Processing user: $email"
+	log "Birth date: $birth_date"
+	log "Groups: $group"
+	log "Shared folder: $shared_folder"
 
 	# formats date and checks if its valid
 	if date -d "$birth_date" '+%Y/%m/%d' >/dev/null 2>&1 &&
 		[[ "$(date -d "$birth_date" '+%Y/%m/%d')" == "$birth_date" ]]; then
 		echo "	Birth date format IS valid"
+		log "SUCCESS: Birth date format is valid for $email"
 	else
 		echo " ERROR: Invalid birth date format"
+		log "ERROR: Invalid birth date format for $email: $birth_date"
 		continue
 	fi
 
 	# call username generator function
 	username=$(get_username "$email")
 	echo "	Username: $username"
+	log "Username generated: $username"
 
 	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
 	birth_month=$(echo "$birth_date" | cut -d'/' -f2)
@@ -161,8 +183,10 @@ do
 	# check existing username before gen - &> redirects stdoutput and stderror to same destination
 	if id "$username" &>/dev/null; then
 		echo "	Username already exists - skipping user creation"
+		log "SKIPPED: Username already exists: $username"
 	else
 		echo "	Username available - can create user"
+		log "INFO: Username available: $username"
 		((users_to_add++))
 	fi
 
@@ -172,16 +196,18 @@ done < <(tail -n +2 "$csv_file")
 
 echo
 echo "Number of users to be added: $users_to_add"
+log "INFO: Number of users to be added: $users_to_add"
 
 read -rp "Continue with user creation? (y/n): " confirmation
 
 if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
 	echo "User creation cancelled"
+	log "INFO: User creation cancelled by user"
 	exit 0
 fi
 
 echo "User creation confirmed"
-
+log "INFO: User creation confirmed"
 
 # Create users after confirmation
 while IFS=',' read -r -a fields
@@ -200,32 +226,40 @@ do
 	# skip users that already existed
 	if id "$username" &>/dev/null; then
 		echo "Skipping existing user: $username"
+		log "SKIPPED: Existing user: $username"
 		continue
 	fi
 
 	echo
 	echo "Creating user: $username"
+	log "Creating user: $username"
 
 	if sudo useradd -m -s /bin/bash "$username"; then
 		echo "	User created successfully"
+		log "SUCCESS: User created: $username"
 	else
 		echo "	ERROR: Failed to create user"
+		log "ERROR: Failed to create user: $username"
 		continue
 	fi
 
 	# key value pair so password isnt exposed on cmd line
 	if echo "$username:$default_password" | sudo chpasswd; then
 		echo "	Default password set successfully"
+		log "SUCCESS: Default password set for: $username"
 	else
 		echo "	ERROR: Failed to set default password"
+		log "ERROR: Failed to set default password for: $username"
 		continue
 	fi
 
 	# default password first login force chage
 	if sudo chage -d 0 "$username"; then
 		echo "	Password change at first login enabled"
+		log "SUCCESS: First-login password change enabled for: $username"
 	else
 		echo "	ERROR: Failed to enforce password change"
+		log "ERROR: Failed to enforce first-login password change for: $username"
 	fi
 
 	# create and assign groups
@@ -236,8 +270,10 @@ do
 			if create_group "$group_name"; then
 				if sudo usermod -aG "$group_name" "$username"; then
 					echo "	User added to group: $group_name"
+					log "SUCCESS: $username added to group: $group_name"
 				else
 					echo "	ERROR: Failed to add user to group: $group_name"
+					log "ERROR: Failed to add $username to group: $group_name"
 				fi
 			fi
 		done
@@ -249,17 +285,21 @@ do
 		echo "alias myls='ls -la ~'" | sudo tee -a "$alias_file" > /dev/null
 		sudo chown "$username:$username" "$alias_file"
 		echo "	myls alias created for sudo user"
+		log "SUCCESS: myls alias created for sudo user: $username"
 	fi
 
 	# check and create shared folder
 	if [[ -n "$shared_folder" ]]; then
 		if [[ -d "$shared_folder" ]]; then
 			echo "	Shared folder already exists: $shared_folder"
+			log "INFO: Shared folder already exists: $shared_folder"
 		else
 			if sudo mkdir -p "$shared_folder"; then
 				echo "	Shared folder created: $shared_folder"
+				log "SUCCESS: Shared folder created: $shared_folder"
 			else
 				echo "	ERROR: Failed to create shared folder: $shared_folder"
+				log "ERROR: Failed to create shared folder: $shared_folder"
 			fi
 		fi
 	fi
@@ -274,14 +314,18 @@ do
 
 		if sudo chown "root:$folder_group" "$shared_folder"; then
 			echo "	Shared folder group set to: $folder_group"
+			log "SUCCESS: Shared folder group set to $folder_group: $shared_folder"
 		else
 			echo "	ERROR: Failed to set shared folder group"
+			log "ERROR: Failed to set shared folder group: $shared_folder"
 		fi
 
 		if sudo chmod 770 "$shared_folder"; then
 			echo "	Shared folder permissions set to 770"
+			log "SUCCESS: Shared folder permissions set to 770: $shared_folder"
 		else
 			echo "	ERROR: Failed to set shared folder permissions"
+			log "ERROR: Failed to set shared folder permissions: $shared_folder"
 		fi
 	fi
 
@@ -290,18 +334,21 @@ do
 		shared_link="/home/$username/shared"
 		if [[ -L "$shared_link" ]]; then
 			echo "	Shared link already exists: $shared_link"
+			log "INFO: Shared link already exists: $shared_link"
 		else
 			if sudo ln -s "$shared_folder" "$shared_link"; then
 				echo "	Shared link created: $shared_link -> $shared_folder"
+				log "SUCCESS: Shared link created: $shared_link -> $shared_folder"
 			else
 				echo "	ERROR: Failed to create shared link: $shared_link"
+				log "ERROR: Failed to create shared link: $shared_link"
 			fi
 		fi
 	fi
 
 done < <(tail -n +2 "$csv_file")
 
-
+log "Script completed successfully"
 
 
 
