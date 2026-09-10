@@ -4,7 +4,7 @@ echo "Task 1 - User Environment Script"
 echo
 
 # find the directory this script is in
-script_dir="$(cd --"$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # Get CSV path or URI from cmd line
 # or ask user if no arg provided
