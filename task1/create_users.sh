@@ -6,6 +6,13 @@ echo
 # find the directory this script is in
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
+# logging
+log_file="$script_dir/create_users.log"
+log() {
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$log_file"
+}
+log "Script started"
+
 # Get CSV path or URI from cmd line
 # or ask user if no arg provided
 if [[ $# -eq 1 ]]; then
