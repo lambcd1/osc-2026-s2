@@ -20,7 +20,7 @@ fi
 if [[ "$input" == http://* || "$input" == https://* ]]; then
 	echo "Remote URI detected: $input"
 
-	# download to the same directory as this
+	# download to the same directory as this with curl
 	filename=$(basename "$input")
 	curl -fl -o "$script_dir/$filename" "$input"
 
