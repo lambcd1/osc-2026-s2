@@ -56,7 +56,7 @@ header=$(head -n 1 "$csv_file")
 echo "CSV header:"
 echo "$header"
 
-if [[ "$header" != "email,birth date,groups,sharedFolder" ]]; then
+if [[ "$header" != "email,birth_date,groups,shared_folder" ]]; then
 	echo "ERROR: Invalid CSV header"
 	exit 1
 fi

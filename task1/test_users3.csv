@@ -1,7 +1,0 @@
-email,birth date,groups,sharedFolder
-alice.smith@example.com,1990/05/15,sudo,/staffData
-bob.jones@example.com,1985/11/22,staff,developers,/devData
-charlie.brown@example.com,1978/03/09,visitor,
-diana.wilson@example.com,2000/12/01,,
-invalid.date@example.com,1990-05-15,sudo,/testData
-bad.date@example.com,1990/99/99,staff,/testData
