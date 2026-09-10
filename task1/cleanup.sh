@@ -30,4 +30,31 @@ do
 done
 
 echo
+echo "Removing test groups"
+
+groups=(
+    dev
+    intern
+    docker
+)
+
+for group_name in "${groups[@]}"
+do
+    echo
+    echo "Checking group: $group_name"
+
+    if getent group "$group_name" &>/dev/null; then
+        echo "    Group exists - removing"
+
+        if sudo groupdel "$group_name"; then
+            echo "    Group $group_name removed successfully"
+        else
+            echo "    ERROR: Failed to remove group $group_name"
+        fi
+    else
+        echo "    Group $group_name does not exist - skipping"
+    fi
+done
+
+echo
 echo "Cleanup complete"
