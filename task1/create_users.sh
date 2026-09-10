@@ -3,6 +3,9 @@
 echo "Task 1 - User Environment Script"
 echo
 
+# find the directory this script is in
+script_dir="$(cd --"$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 # Get CSV path or URI from cmd line
 # or ask user if no arg provided
 if [[ $# -eq 1 ]]; then
@@ -19,13 +22,14 @@ if [[ "$input" == http://* || "$input" == https://* ]]; then
 
 	# download to the same directory as this
 	filename=$(basename "$input")
-	curl -o "$filename" "$input"
+	curl -fl -o "$script_dir/$filename" "$input"
 
-	if [[ -f "$filename" ]]; then
+	if [[ $? -eq 0 && -f "$script_dir/$filename" ]]; then
 		echo "Remote file downloaded successfully: $filename"
-		csv_file="$filename"
+		csv_file="$script_dir/$filename"
 	else
 		echo "ERROR: Failed to download remote file"
+		exit 1
 	fi
 else
 	echo "Local file detected: $input"
@@ -35,6 +39,7 @@ else
 		csv_file="$input"
 	else
 		echo "ERROR: Local file does not exist"
+		exit 1
 	fi
 fi
 
@@ -51,10 +56,17 @@ header=$(head -n 1 "$csv_file")
 echo "CSV header:"
 echo "$header"
 
-	# Internal Field Seperator parses the CSV, 
+if [[ "$header" != "e-mail,birth date,groups,sharedFolder" ]]; then
+	echo "ERROR: Invalid CSV header"
+	exit 1
+fi
+echo "CSV header is valid"
+
+	# Internal Field Seperator parses the CSV,
 while IFS=',' read -r -a fields
 do
 	# refresh each time so previous one doesnt pollute current one
+	group=""
 	subgroup=""
 	shared_folder=""
 
