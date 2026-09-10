@@ -3,6 +3,10 @@
 echo "Task 1 - User Environment Cleanup"
 echo
 
+# delete previous log file
+#if [[ -f create_users.log ]]; then
+#	rm create_users.log
+
 users=(
 	sAlice
 	jBob
@@ -16,9 +20,7 @@ do
 	echo "Checking user: $username"
 
 	if id "$username" &>/dev/null; then
-
 		echo "	User exists - removing user and home directory"
-
 		if sudo userdel -r "$username"; then
 			echo "	User $username removed successfully"
 		else

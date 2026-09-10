@@ -375,7 +375,11 @@ log "Script completed successfully"
 #		Unsure about its priority with limited time
 #		compared to Task 2 etc...
 #
-
+#
+#
+# Shared Folder permissions heavily based around users.csv
+# wouldnt work with other files. not sure how to generalise
+#
 
 
 

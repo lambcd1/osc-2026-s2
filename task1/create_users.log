@@ -119,3 +119,61 @@
 [2026-09-10 07:48:18] SUCCESS: Shared folder permissions set to 770: /opt/staffData
 [2026-09-10 07:48:18] SUCCESS: Shared link created: /home/nDave/shared -> /opt/staffData
 [2026-09-10 07:48:18] Script completed successfully
+[2026-09-10 09:56:32] Script started
+[2026-09-10 09:56:32] Input received: /test_users.csv
+[2026-09-10 09:56:32] Local file detected: /test_users.csv
+[2026-09-10 09:56:32] ERROR: Local file does not exist: /test_users.csv
+[2026-09-10 09:56:49] Script started
+[2026-09-10 09:56:49] Input received: test_users.csv
+[2026-09-10 09:56:49] Local file detected: test_users.csv
+[2026-09-10 09:56:49] SUCCESS: Local file exists: test_users.csv
+[2026-09-10 09:56:49] SUCCESS: CSV file is not empty: test_users.csv
+[2026-09-10 09:56:49] CSV header read: email,birth_date,groups,shared_folder
+[2026-09-10 09:56:49] SUCCESS: CSV header is valid
+[2026-09-10 09:56:49] Processing user: 
+[2026-09-10 09:56:49] Birth date: 
+[2026-09-10 09:56:49] Groups: 
+[2026-09-10 09:56:49] Shared folder: 
+[2026-09-10 09:56:49] ERROR: Invalid email format: 
+[2026-09-10 09:56:49] Processing user: alice.smith@example.com
+[2026-09-10 09:56:49] Birth date: 1990/06/15
+[2026-09-10 09:56:49] Groups: sudo:dev
+[2026-09-10 09:56:49] Shared folder: /opt/staffData
+[2026-09-10 09:56:49] SUCCESS: Email format is valid for alice.smith@example.com
+[2026-09-10 09:56:49] SUCCESS: Birth date format is valid for alice.smith@example.com
+[2026-09-10 09:56:49] Username generated: sAlice
+[2026-09-10 09:56:49] INFO: Username available: sAlice
+[2026-09-10 09:56:49] Processing user: 
+[2026-09-10 09:56:49] Birth date: 
+[2026-09-10 09:56:49] Groups: 
+[2026-09-10 09:56:49] Shared folder: 
+[2026-09-10 09:56:49] ERROR: Invalid email format: 
+[2026-09-10 09:56:49] Processing user: not-an-email
+[2026-09-10 09:56:49] Birth date: 1985/11/02
+[2026-09-10 09:56:49] Groups: dev
+[2026-09-10 09:56:49] Shared folder: /opt/staffData
+[2026-09-10 09:56:49] ERROR: Invalid email format: not-an-email
+[2026-09-10 09:56:49] INFO: Number of users to be added: 1
+[2026-09-10 09:57:27] INFO: User creation cancelled by user
+[2026-09-10 09:57:47] Script started
+[2026-09-10 09:57:47] Input received: test_users.csv
+[2026-09-10 09:57:47] Local file detected: test_users.csv
+[2026-09-10 09:57:47] SUCCESS: Local file exists: test_users.csv
+[2026-09-10 09:57:47] SUCCESS: CSV file is not empty: test_users.csv
+[2026-09-10 09:57:47] CSV header read: email,birth_date,groups,shared_folder
+[2026-09-10 09:57:47] SUCCESS: CSV header is valid
+[2026-09-10 09:57:47] Processing user: alice.smith@example.com
+[2026-09-10 09:57:47] Birth date: 1990/06/15
+[2026-09-10 09:57:47] Groups: sudo:dev
+[2026-09-10 09:57:47] Shared folder: /opt/staffData
+[2026-09-10 09:57:47] SUCCESS: Email format is valid for alice.smith@example.com
+[2026-09-10 09:57:47] SUCCESS: Birth date format is valid for alice.smith@example.com
+[2026-09-10 09:57:47] Username generated: sAlice
+[2026-09-10 09:57:47] INFO: Username available: sAlice
+[2026-09-10 09:57:47] Processing user: not-an-email
+[2026-09-10 09:57:47] Birth date: 1985/11/02
+[2026-09-10 09:57:47] Groups: dev
+[2026-09-10 09:57:47] Shared folder: /opt/staffData
+[2026-09-10 09:57:47] ERROR: Invalid email format: not-an-email
+[2026-09-10 09:57:47] INFO: Number of users to be added: 1
+[2026-09-10 09:57:58] INFO: User creation cancelled by user
