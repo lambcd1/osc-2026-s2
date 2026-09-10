@@ -78,6 +78,9 @@ get_username() {
 	echo "$username"
 }
 
+# initialise count for user creation
+users_to_add=0
+
 	# Internal Field Seperator parses the CSV,
 while IFS=',' read -r -a fields
 do
@@ -114,6 +117,7 @@ do
 		echo "	Birth date format IS valid"
 	else
 		echo " ERROR: Invalid birth date format"
+		continue
 	fi
 
 	# call username generator function
@@ -125,6 +129,7 @@ do
 		echo "	Username already exists - skipping user creation"
 	else
 		echo "	Username available - can create user"
+		((users_to_add++))
 	fi
 
 	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
@@ -137,18 +142,17 @@ do
 	# left arrow puts it into the loop
 done < <(tail -n +2 "$csv_file")
 
+echo
+echo "Number of users to be added: $users_to_add"
 
+read -rp "Continue with user creation? (y/n): " confirmation
 
+if [[ "$confirmation" != "y" && "$confirmation" != "Y" ]]; then
+	echo "User creation cancelled"
+	exit 0
+fi
 
-
-
-
-
-
-
-
-
-
+echo "User creation confirmed"
 
 
 
