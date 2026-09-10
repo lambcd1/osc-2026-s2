@@ -44,10 +44,10 @@ echo "Directory name: $directory_name"
 log "Source directory confirmed: $source_dir"
 
 # Create timestamp
-timestamp="$(date '+%Y-%m-%d_%H-%M-%S')"
+timestamp="$(date '+%Y-%m-%d')"
 
 # Create backup filename
-backup_file="backup-${directory_name}-${timestamp}.tar.gz"
+backup_file="backup-${timestamp}.tar.gz"
 backup_path="$script_dir/$backup_file"
 
 echo
@@ -104,7 +104,124 @@ else
 fi
 
 
+# Get remote connection details
+echo
+echo "Remote backup destination"
 
+read -rp "Enter remote IP address or hostname: " remote_host
+
+if [[ -z "$remote_host" ]]; then
+	echo "ERROR: Remote host cannot be empty"
+	log "ERROR: Remote host was empty"
+	exit 1
+fi
+
+read -rp "Enter SSH port (press Enter for 22): " remote_port
+
+if [[ -z "$remote_port" ]]; then
+	remote_port=22
+fi
+
+# Check port contains only numbers
+if [[ ! "$remote_port" =~ ^[0-9]+$ ]]; then
+	echo "ERROR: Invalid SSH port: $remote_port"
+	log "ERROR: Invalid SSH port: $remote_port"
+	exit 1
+fi
+
+read -rp "Enter remote username: " remote_user
+
+if [[ -z "$remote_user" ]]; then
+	echo "ERROR: Remote username cannot be empty"
+	log "ERROR: Remote username was empty"
+	exit 1
+fi
+
+read -rp "Enter remote destination directory: " remote_dir
+
+if [[ -z "$remote_dir" ]]; then
+	echo "ERROR: Remote destination directory cannot be empty"
+	log "ERROR: Remote destination directory was empty"
+	exit 1
+fi
+
+echo
+echo "Remote host: $remote_host"
+echo "Remote port: $remote_port"
+echo "Remote user: $remote_user"
+echo "Remote directory: $remote_dir"
+log "Remote destination: $remote_user@$remote_host:$remote_dir"
+log "Remote SSH port: $remote_port"
+
+# Check remote host is reachable over SSH
+echo
+echo "Checking remote connection..."
+
+if ssh -p "$remote_port" -o ConnectTimeout=10 \
+	"$remote_user@$remote_host" "true"; then
+	echo "Remote connection successful"
+	log "SUCCESS: Remote SSH connection established"
+else
+	echo "ERROR: Unable to connect to remote host"
+	log "ERROR: Unable to connect to remote host"
+	exit 1
+fi
+
+# Check remote destination directory
+echo
+echo "Checking remote destination directory..."
+
+if ssh -p "$remote_port" \
+	"$remote_user@$remote_host" "test -d '$remote_dir'"; then
+	echo "Remote destination directory exists"
+	log "SUCCESS: Remote destination exists: $remote_dir"
+else
+	echo "ERROR: Remote destination directory does not exist or is inaccessible"
+	log "ERROR: Remote destination unavailable: $remote_dir"
+	exit 1
+fi
+
+# Upload backup
+echo
+echo "Uploading backup..."
+log "Uploading backup: $backup_file"
+
+if scp -P "$remote_port" "$backup_path" \
+	"$remote_user@$remote_host:$remote_dir/"; then
+	echo "Backup uploaded successfully"
+	log "SUCCESS: Backup uploaded to $remote_user@$remote_host:$remote_dir"
+else
+	echo "ERROR: Failed to upload backup"
+	log "ERROR: Backup upload failed: $backup_file"
+	exit 1
+fi
+
+# Verify backup exists remotely
+echo
+echo "Verifying remote backup..."
+
+remote_backup="$remote_dir/$backup_file"
+
+if ssh -p "$remote_port" \
+	"$remote_user@$remote_host" "test -f '$remote_backup'"; then
+	echo "Remote backup verified successfully"
+	log "SUCCESS: Remote backup verified: $remote_backup"
+else
+	echo "ERROR: Remote backup could not be verified"
+	log "ERROR: Remote backup verification failed: $remote_backup"
+	exit 1
+fi
+
+echo
+echo "========================================"
+echo "BACKUP COMPLETE"
+echo "========================================"
+echo "Source: $source_dir"
+echo "Backup: $backup_file"
+echo "Remote: $remote_user@$remote_user@$remote_host:$remote_dir"
+echo
+
+log "Script completed successfully"
 
 
 
