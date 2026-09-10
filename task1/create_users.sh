@@ -199,7 +199,7 @@ do
 	echo
 	echo "Creating user: $username"
 
-	if sudo useradd -m "$username"; then
+	if sudo useradd -m -s /bin/bash "$username"; then
 		echo "	User created successfully"
 	else
 		echo "	ERROR: Failed to create user"
@@ -234,6 +234,14 @@ do
 				fi
 			fi
 		done
+	fi
+
+	# create myls alias for sudo users
+	if [[ ":$group:" == *":sudo:"* ]]; then
+		alias_file="/home/$username/.bash_aliases"
+		echo "alias myls='ls -la ~'" | sudo tee -a "$alias_file" > /dev/null
+		sudo chown "$username:$username" "$alias_file"
+		echo "	myls alias created for sudo user"
 	fi
 
 	# check and create shared folder
@@ -290,7 +298,9 @@ done < <(tail -n +2 "$csv_file")
 
 
 
-
+# Potential Problems:
+#
+#
 
 
 
