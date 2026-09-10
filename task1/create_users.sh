@@ -56,7 +56,7 @@ header=$(head -n 1 "$csv_file")
 echo "CSV header:"
 echo "$header"
 
-if [[ "$header" != "e-mail,birth date,groups,sharedFolder" ]]; then
+if [[ "$header" != "email,birth date,groups,sharedFolder" ]]; then
 	echo "ERROR: Invalid CSV header"
 	exit 1
 fi
@@ -92,11 +92,9 @@ do
 	echo "	Subgroup: $subgroup"
 	echo "	Shared folder: $shared_folder"
 
-	# =~ checks if right side matches left side of equals (regex)
-	# note:
-	# this does not check if the months and days are valid (eg 99)
-	# this is reallly just checking if the characters are num and the delimiter is slash
-	if [[ "$birth_date" =~ ^[0-9]{4}/[0-9]{2}/[0-9]{2}$ ]]; then
+	# formats date and checks if its valid
+	if date -d "$birth_date" '+%Y/%m/%d' >/dev/null 2>&1 &&
+		[[ "$(date -d "$birth_date" '+%Y/%m/%d')" == "$birth_date" ]]; then
 		echo "	Birth date format IS valid"
 	else
 		echo " ERROR: Invalid birth date format"
