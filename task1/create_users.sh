@@ -130,6 +130,25 @@ do
 	else
 		echo "	Username available - can create user"
 		((users_to_add++))
+
+		if sudo useradd -m "$username"; then
+			echo "	User created successfully"
+
+			# key value pair so password isnt exposed on cmd line
+			if echo "$username:$default_password" | sudo chpasswd; then
+				echo "	Default password set successfully"
+			else
+				echo "	ERROR: Failed to set default password"
+				continue
+			fi
+
+			# default password first login force chage
+			if sudo chage -d 0 "$username"; then
+				echo "	Password change at first login enabled"
+			else
+				echo "	ERROR: Failed to enforce password change"
+			fi
+		fi
 	fi
 
 	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
