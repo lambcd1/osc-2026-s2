@@ -78,6 +78,28 @@ get_username() {
 	echo "$username"
 }
 
+create_group() {
+	# first field is the one variable fed into the function call
+	group_name="$1"
+
+	# return 0 means success
+	if [[ -z "$group_name" ]]; then
+		return 0
+	fi
+
+	if getent group "$group_name" &>/dev/null; then
+		echo "	Group already exists: $group_name"
+	else
+		if sudo groupadd "$group_name"; then
+			echo "	Group created: $group_name"
+		else
+			echo "	ERROR: Failed to create group: $group_name"
+			# return 1 for failure
+			return 1
+		fi
+	fi
+}
+
 # initialise count for user creation
 users_to_add=0
 
@@ -196,6 +218,27 @@ do
 		echo "	Password change at first login enabled"
 	else
 		echo "	ERROR: Failed to enforce password change"
+	fi
+
+	# group and subgroup
+	if [[ -n "$group" ]]; then
+		if create_group "$group"; then
+			if sudo usermod -aG "$group" "$username"; then
+				echo "	User added to group: $group"
+			else
+				echo "	ERROR: Failed to add user to group: $group"
+			fi
+		fi
+	fi
+
+	if [[ -n "$subgroup" ]]; then
+		if create_group "$subgroup"; then
+			if sudo usermod -aG "$subgroup" "$username"; then
+				echo "	User added to subgroup: $subgroup"
+			else
+				echo "	ERROR: Failed to add user to subgroup: $subgroup"
+			fi
+		fi
 	fi
 
 done < <(tail -n +2 "$csv_file")
