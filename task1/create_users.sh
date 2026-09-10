@@ -308,13 +308,16 @@ do
 
 	# check and create shared folder
 	if [[ -n "$shared_folder" ]]; then
+		shared_folder_ready=false
 		if [[ -d "$shared_folder" ]]; then
 			echo "	Shared folder already exists: $shared_folder"
 			log "INFO: Shared folder already exists: $shared_folder"
+			shared_folder_ready=true
 		else
 			if sudo mkdir -p "$shared_folder"; then
 				echo "	Shared folder created: $shared_folder"
 				log "SUCCESS: Shared folder created: $shared_folder"
+				shared_folder_ready=true
 			else
 				echo "	ERROR: Failed to create shared folder: $shared_folder"
 				log "ERROR: Failed to create shared folder: $shared_folder"
@@ -323,7 +326,7 @@ do
 	fi
 
 	# set shared folder group ownership and permissions
-	if [[ -n "$shared_folder" ]]; then
+	if [[ -n "$shared_folder" && "$shared_folder_ready" == true ]]; then
 		if [[ "$shared_folder" == "/opt/staffData" ]]; then
 			folder_group="dev"
 		elif [[ "$shared_folder" == "/opt/internData" ]]; then
@@ -348,7 +351,7 @@ do
 	fi
 
 	# create shared folder symbolic link in user's home
-	if [[ -n "$shared_folder" ]]; then
+	if [[ -n "$shared_folder" && "$shared_folder_ready" == true ]]; then
 		shared_link="/home/$username/shared"
 		if [[ -L "$shared_link" ]]; then
 			echo "	Shared link already exists: $shared_link"
@@ -385,8 +388,9 @@ log "Script completed successfully"
 #
 #
 #
-# Shared Folder permissions heavily based around users.csv
-# wouldnt work with other files. not sure how to generalise
+# Shared Folder: permissions heavily based around users.csv
+#		 wouldnt work with other files. not sure
+#		 how to generalise
 #
 
 

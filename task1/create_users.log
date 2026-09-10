@@ -218,3 +218,90 @@
 [2026-09-10 10:54:15] INFO: Username available: nDave
 [2026-09-10 10:54:15] INFO: Number of users to be added: 4
 [2026-09-10 10:56:40] INFO: User creation cancelled by user
+[2026-09-10 11:06:36] Script started
+[2026-09-10 11:06:36] Input received: users.csv
+[2026-09-10 11:06:36] Local file detected: users.csv
+[2026-09-10 11:06:36] SUCCESS: Local file exists: users.csv
+[2026-09-10 11:06:36] SUCCESS: CSV file is not empty: users.csv
+[2026-09-10 11:06:36] CSV header read: email,birth_date,groups,shared_folder
+[2026-09-10 11:06:36] SUCCESS: CSV header is valid
+[2026-09-10 11:06:36] Processing user: alice.smith@example.com
+[2026-09-10 11:06:36] Birth date: 1990/06/15
+[2026-09-10 11:06:36] Groups: sudo:dev
+[2026-09-10 11:06:36] Shared folder: /opt/staffData
+[2026-09-10 11:06:36] SUCCESS: Email format is valid for alice.smith@example.com
+[2026-09-10 11:06:36] SUCCESS: Birth date format is valid for alice.smith@example.com
+[2026-09-10 11:06:36] Username generated: sAlice
+[2026-09-10 11:06:36] INFO: Username available: sAlice
+[2026-09-10 11:06:36] Processing user: bob.jones@example.com
+[2026-09-10 11:06:36] Birth date: 1985/11/02
+[2026-09-10 11:06:36] Groups: dev
+[2026-09-10 11:06:36] Shared folder: /opt/staffData
+[2026-09-10 11:06:36] SUCCESS: Email format is valid for bob.jones@example.com
+[2026-09-10 11:06:36] SUCCESS: Birth date format is valid for bob.jones@example.com
+[2026-09-10 11:06:36] Username generated: jBob
+[2026-09-10 11:06:36] INFO: Username available: jBob
+[2026-09-10 11:06:36] Processing user: carol.white@example.com
+[2026-09-10 11:06:36] Birth date: 2000/03/22
+[2026-09-10 11:06:36] Groups: intern
+[2026-09-10 11:06:36] Shared folder: /opt/internData
+[2026-09-10 11:06:36] SUCCESS: Email format is valid for carol.white@example.com
+[2026-09-10 11:06:36] SUCCESS: Birth date format is valid for carol.white@example.com
+[2026-09-10 11:06:36] Username generated: wCarol
+[2026-09-10 11:06:36] INFO: Username available: wCarol
+[2026-09-10 11:06:36] Processing user: dave.nguyen@example.com
+[2026-09-10 11:06:36] Birth date: 1978/09/30
+[2026-09-10 11:06:36] Groups: dev:docker
+[2026-09-10 11:06:36] Shared folder: /opt/staffData
+[2026-09-10 11:06:36] SUCCESS: Email format is valid for dave.nguyen@example.com
+[2026-09-10 11:06:36] SUCCESS: Birth date format is valid for dave.nguyen@example.com
+[2026-09-10 11:06:36] Username generated: nDave
+[2026-09-10 11:06:36] INFO: Username available: nDave
+[2026-09-10 11:06:36] INFO: Number of users to be added: 4
+[2026-09-10 11:06:41] INFO: User creation confirmed
+[2026-09-10 11:06:41] Creating user: sAlice
+[2026-09-10 11:06:54] SUCCESS: User created: sAlice
+[2026-09-10 11:06:54] SUCCESS: Default password set for: sAlice
+[2026-09-10 11:06:54] SUCCESS: First-login password change enabled for: sAlice
+[2026-09-10 11:06:54] INFO: Group already exists: sudo
+[2026-09-10 11:06:54] SUCCESS: sAlice added to group: sudo
+[2026-09-10 11:06:54] SUCCESS: Group created: dev
+[2026-09-10 11:06:54] SUCCESS: sAlice added to group: dev
+[2026-09-10 11:06:54] SUCCESS: myls alias created for sudo user: sAlice
+[2026-09-10 11:06:54] SUCCESS: Shared folder created: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared folder group set to dev: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared folder permissions set to 770: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared link created: /home/sAlice/shared -> /opt/staffData
+[2026-09-10 11:06:54] Creating user: jBob
+[2026-09-10 11:06:54] SUCCESS: User created: jBob
+[2026-09-10 11:06:54] SUCCESS: Default password set for: jBob
+[2026-09-10 11:06:54] SUCCESS: First-login password change enabled for: jBob
+[2026-09-10 11:06:54] INFO: Group already exists: dev
+[2026-09-10 11:06:54] SUCCESS: jBob added to group: dev
+[2026-09-10 11:06:54] INFO: Shared folder already exists: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared folder group set to dev: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared folder permissions set to 770: /opt/staffData
+[2026-09-10 11:06:54] SUCCESS: Shared link created: /home/jBob/shared -> /opt/staffData
+[2026-09-10 11:06:54] Creating user: wCarol
+[2026-09-10 11:06:54] SUCCESS: User created: wCarol
+[2026-09-10 11:06:54] SUCCESS: Default password set for: wCarol
+[2026-09-10 11:06:54] SUCCESS: First-login password change enabled for: wCarol
+[2026-09-10 11:06:54] SUCCESS: Group created: intern
+[2026-09-10 11:06:54] SUCCESS: wCarol added to group: intern
+[2026-09-10 11:06:54] SUCCESS: Shared folder created: /opt/internData
+[2026-09-10 11:06:54] SUCCESS: Shared folder group set to intern: /opt/internData
+[2026-09-10 11:06:54] SUCCESS: Shared folder permissions set to 770: /opt/internData
+[2026-09-10 11:06:55] SUCCESS: Shared link created: /home/wCarol/shared -> /opt/internData
+[2026-09-10 11:06:55] Creating user: nDave
+[2026-09-10 11:06:55] SUCCESS: User created: nDave
+[2026-09-10 11:06:55] SUCCESS: Default password set for: nDave
+[2026-09-10 11:06:55] SUCCESS: First-login password change enabled for: nDave
+[2026-09-10 11:06:55] INFO: Group already exists: dev
+[2026-09-10 11:06:55] SUCCESS: nDave added to group: dev
+[2026-09-10 11:06:55] SUCCESS: Group created: docker
+[2026-09-10 11:06:55] SUCCESS: nDave added to group: docker
+[2026-09-10 11:06:55] INFO: Shared folder already exists: /opt/staffData
+[2026-09-10 11:06:55] SUCCESS: Shared folder group set to dev: /opt/staffData
+[2026-09-10 11:06:55] SUCCESS: Shared folder permissions set to 770: /opt/staffData
+[2026-09-10 11:06:55] SUCCESS: Shared link created: /home/nDave/shared -> /opt/staffData
+[2026-09-10 11:06:55] Script completed successfully
