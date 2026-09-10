@@ -108,12 +108,12 @@ while IFS=',' read -r -a fields
 do
 	# refresh each time so previous one doesnt pollute current one
 	group=""
-	subgroup=""
 	shared_folder=""
 
 	email="${fields[0]}"
 	birth_date="${fields[1]}"
 	group="${fields[2]}"
+	shared_folder="${fields[3]}"
 
 	# input smoothing - subgroups, empty, shared folder?
 	if [[ "${fields[3]}" == /* ]]; then
@@ -129,8 +129,7 @@ do
 	echo "Processing user:"
 	echo "	Email: $email"
 	echo "	Birth Date: $birth_date"
-	echo "	Group: $group"
-	echo "	Subgroup: $subgroup"
+	echo "	Groups: $group"
 	echo "	Shared folder: $shared_folder"
 
 	# formats date and checks if its valid
@@ -220,25 +219,19 @@ do
 		echo "	ERROR: Failed to enforce password change"
 	fi
 
-	# group and subgroup
+	# create and assign groups
 	if [[ -n "$group" ]]; then
-		if create_group "$group"; then
-			if sudo usermod -aG "$group" "$username"; then
-				echo "	User added to group: $group"
-			else
-				echo "	ERROR: Failed to add user to group: $group"
+		IFS=':' read -ra groups <<< "$group"
+		for group_name in "${groups[@]}"
+		do
+			if create_group "$group_name"; then
+				if sudo usermod -aG "$group_name" "$username"; then
+					echo "	User added to group: $group_name"
+				else
+					echo "	ERROR: Failed to add user to group: $group_name"
+				fi
 			fi
-		fi
-	fi
-
-	if [[ -n "$subgroup" ]]; then
-		if create_group "$subgroup"; then
-			if sudo usermod -aG "$subgroup" "$username"; then
-				echo "	User added to subgroup: $subgroup"
-			else
-				echo "	ERROR: Failed to add user to subgroup: $subgroup"
-			fi
-		fi
+		done
 	fi
 
 done < <(tail -n +2 "$csv_file")
