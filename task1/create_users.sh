@@ -377,22 +377,31 @@ log "Script completed successfully"
 #
 # CSV validation: This is currently built around the data
 #               coming in the format offered by the
-#		users.csv download from the OP BIT link.
+#               users.csv download from the OP BIT link.
 #
-#		If the testing during code defense
-#		requires a different file, then it
-#		is unprepared for that.
+#               If the testing during code defense
+#               requires a different file, then it
+#               is unprepared for that.
 #
-#		Unsure about its priority with limited time
-#		compared to Task 2 etc...
-#
+#               The CSV parser does not support every
+#               possible CSV format, such as quoted fields
+#               containing commas or complex CSV escaping.
 #
 #
 # Shared Folder: permissions heavily based around users.csv
-#		 wouldnt work with other files. not sure
-#		 how to generalise
+#                would not work with other files. not sure
+#                how to generalise
 #
-
-
-
-
+#
+# Script Interruption: If the script is interrupted while
+#                      creating a user or configuring their
+#                      environment, some changes may already
+#                      have been made. The script does not
+#                      currently roll back partially completed
+#                      changes.
+#
+#
+# Log File: If the script directory is not writable, the
+#           log file cannot be updated. This would prevent
+#           detailed logging of the script execution.
+#
