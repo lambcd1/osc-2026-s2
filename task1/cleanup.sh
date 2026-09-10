@@ -56,5 +56,30 @@ do
     fi
 done
 
+shared_folders=(
+    /opt/staffData
+    /opt/internData
+)
+
+for folder in "${shared_folders[@]}"
+
+do
+	echo
+	echo "Checking shared folder: $folder"
+
+	if [[ -d "$folder" ]]; then
+
+		echo "    Shared folder exists - removing"
+
+		if sudo rm -rf "$folder"; then
+			echo "    Shared folder $folder removed successfully"
+		else
+			echo "    ERROR: Failed to remove shared folder $folder"
+		fi
+	else
+		echo "    Shared folder $folder does not exist - skipping"
+	fi
+done
+
 echo
 echo "Cleanup complete"

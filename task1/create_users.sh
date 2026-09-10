@@ -236,6 +236,19 @@ do
 		done
 	fi
 
+	# check and create shared folder
+	if [[ -n "$shared_folder" ]]; then
+		if [[ -d "$shared_folder" ]]; then
+			echo "	Shared folder already exists: $shared_folder"
+		else
+			if sudo mkdir -p "$shared_folder"; then
+				echo "	Shared folder created: $shared_folder"
+			else
+				echo "	ERROR: Failed to create shared folder: $shared_folder"
+			fi
+		fi
+	fi
+
 done < <(tail -n +2 "$csv_file")
 
 
