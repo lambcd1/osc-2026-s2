@@ -124,38 +124,19 @@ do
 	username=$(get_username "$email")
 	echo "	Username: $username"
 
+	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
+	birth_month=$(echo "$birth_date" | cut -d'/' -f2)
+	default_password="${birth_year}${birth_month}"
+
+	echo "	Default password: $default_password"
+
 	# check existing username before gen - &> redirects stdoutput and stderror to same destination
 	if id "$username" &>/dev/null; then
 		echo "	Username already exists - skipping user creation"
 	else
 		echo "	Username available - can create user"
 		((users_to_add++))
-
-		if sudo useradd -m "$username"; then
-			echo "	User created successfully"
-
-			# key value pair so password isnt exposed on cmd line
-			if echo "$username:$default_password" | sudo chpasswd; then
-				echo "	Default password set successfully"
-			else
-				echo "	ERROR: Failed to set default password"
-				continue
-			fi
-
-			# default password first login force chage
-			if sudo chage -d 0 "$username"; then
-				echo "	Password change at first login enabled"
-			else
-				echo "	ERROR: Failed to enforce password change"
-			fi
-		fi
 	fi
-
-	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
-	birth_month=$(echo "$birth_date" | cut -d'/' -f2)
-	default_password="${birth_year}${birth_month}"
-
-	echo "	Default password: $default_password"
 
 	# right arrow outputs the bracketed command
 	# left arrow puts it into the loop
@@ -173,6 +154,51 @@ fi
 
 echo "User creation confirmed"
 
+
+# Create users after confirmation
+while IFS=',' read -r -a fields
+do
+	email="${fields[0]}"
+	birth_date="${fields[1]}"
+
+	username=$(get_username "$email")
+
+	birth_year=$(echo "$birth_date" | cut -d'/' -f1)
+	birth_month=$(echo "$birth_date" | cut -d'/' -f2)
+	default_password="${birth_year}${birth_month}"
+
+	# skip users that already existed
+	if id "$username" &>/dev/null; then
+		echo "Skipping existing user: $username"
+		continue
+	fi
+
+	echo
+	echo "Creating user: $username"
+
+	if sudo useradd -m "$username"; then
+		echo "	User created successfully"
+	else
+		echo "	ERROR: Failed to create user"
+		continue
+	fi
+
+	# key value pair so password isnt exposed on cmd line
+	if echo "$username:$default_password" | sudo chpasswd; then
+		echo "	Default password set successfully"
+	else
+		echo "	ERROR: Failed to set default password"
+		continue
+	fi
+
+	# default password first login force chage
+	if sudo chage -d 0 "$username"; then
+		echo "	Password change at first login enabled"
+	else
+		echo "	ERROR: Failed to enforce password change"
+	fi
+
+done < <(tail -n +2 "$csv_file")
 
 
 
