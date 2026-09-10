@@ -292,10 +292,18 @@ do
 	# create myls alias for sudo users
 	if [[ ":$group:" == *":sudo:"* ]]; then
 		alias_file="/home/$username/.bash_aliases"
-		echo "alias myls='ls -la ~'" | sudo tee -a "$alias_file" > /dev/null
-		sudo chown "$username:$username" "$alias_file"
-		echo "	myls alias created for sudo user"
-		log "SUCCESS: myls alias created for sudo user: $username"
+		if echo "alias myls='ls -la ~'" | sudo tee -a "$alias_file" > /dev/null; then
+			if sudo chown "$username:$username" "$alias_file"; then
+				echo "	myls alias created for sudo user"
+				log "SUCCESS: myls alias created for sudo user: $username"
+			else
+				echo "	ERROR: Failed to set alias file ownership"
+				log "ERROR: Failed to set alias file ownership: $alias_file"
+			fi
+		else
+			echo "	ERROR: Failed to create myls alias"
+			log "ERROR: Failed to create myls alias for: $username"
+		fi
 	fi
 
 	# check and create shared folder

@@ -1,0 +1,3 @@
+email,birth_date,groups,shared_folder
+alice.smith@example.com,1990/06/15,sudo:dev,/opt/staffData
+not-an-email,1985/11/02,dev,/opt/staffData

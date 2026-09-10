@@ -177,3 +177,44 @@
 [2026-09-10 09:57:47] ERROR: Invalid email format: not-an-email
 [2026-09-10 09:57:47] INFO: Number of users to be added: 1
 [2026-09-10 09:57:58] INFO: User creation cancelled by user
+[2026-09-10 10:54:14] Script started
+[2026-09-10 10:54:14] Input received: users.csv
+[2026-09-10 10:54:14] Local file detected: users.csv
+[2026-09-10 10:54:14] SUCCESS: Local file exists: users.csv
+[2026-09-10 10:54:14] SUCCESS: CSV file is not empty: users.csv
+[2026-09-10 10:54:14] CSV header read: email,birth_date,groups,shared_folder
+[2026-09-10 10:54:14] SUCCESS: CSV header is valid
+[2026-09-10 10:54:14] Processing user: alice.smith@example.com
+[2026-09-10 10:54:14] Birth date: 1990/06/15
+[2026-09-10 10:54:14] Groups: sudo:dev
+[2026-09-10 10:54:14] Shared folder: /opt/staffData
+[2026-09-10 10:54:14] SUCCESS: Email format is valid for alice.smith@example.com
+[2026-09-10 10:54:14] SUCCESS: Birth date format is valid for alice.smith@example.com
+[2026-09-10 10:54:14] Username generated: sAlice
+[2026-09-10 10:54:14] INFO: Username available: sAlice
+[2026-09-10 10:54:14] Processing user: bob.jones@example.com
+[2026-09-10 10:54:14] Birth date: 1985/11/02
+[2026-09-10 10:54:14] Groups: dev
+[2026-09-10 10:54:14] Shared folder: /opt/staffData
+[2026-09-10 10:54:14] SUCCESS: Email format is valid for bob.jones@example.com
+[2026-09-10 10:54:15] SUCCESS: Birth date format is valid for bob.jones@example.com
+[2026-09-10 10:54:15] Username generated: jBob
+[2026-09-10 10:54:15] INFO: Username available: jBob
+[2026-09-10 10:54:15] Processing user: carol.white@example.com
+[2026-09-10 10:54:15] Birth date: 2000/03/22
+[2026-09-10 10:54:15] Groups: intern
+[2026-09-10 10:54:15] Shared folder: /opt/internData
+[2026-09-10 10:54:15] SUCCESS: Email format is valid for carol.white@example.com
+[2026-09-10 10:54:15] SUCCESS: Birth date format is valid for carol.white@example.com
+[2026-09-10 10:54:15] Username generated: wCarol
+[2026-09-10 10:54:15] INFO: Username available: wCarol
+[2026-09-10 10:54:15] Processing user: dave.nguyen@example.com
+[2026-09-10 10:54:15] Birth date: 1978/09/30
+[2026-09-10 10:54:15] Groups: dev:docker
+[2026-09-10 10:54:15] Shared folder: /opt/staffData
+[2026-09-10 10:54:15] SUCCESS: Email format is valid for dave.nguyen@example.com
+[2026-09-10 10:54:15] SUCCESS: Birth date format is valid for dave.nguyen@example.com
+[2026-09-10 10:54:15] Username generated: nDave
+[2026-09-10 10:54:15] INFO: Username available: nDave
+[2026-09-10 10:54:15] INFO: Number of users to be added: 4
+[2026-09-10 10:56:40] INFO: User creation cancelled by user
