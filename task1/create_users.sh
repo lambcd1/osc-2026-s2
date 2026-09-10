@@ -62,6 +62,22 @@ if [[ "$header" != "email,birth_date,groups,shared_folder" ]]; then
 fi
 echo "CSV header is valid"
 
+
+get_username() {
+	# -d cut delimiter
+	# -f cut field selector
+	# -c cut character selector
+	first_name=$(echo "$email" | cut -d'.' -f1)
+	surname=$(echo "$email" | cut -d'@' -f1 | cut -d'.' -f2)
+	first_letter=$(echo "$surname" | cut -c1)
+
+	# sed = stream editor. ^. selects first char, U& uppercases it
+	first_name_capital=$(echo "$first_name" | sed 's/^./\U&/')
+	username="${first_letter}${first_name_capital}"
+
+	echo "$username"
+}
+
 	# Internal Field Seperator parses the CSV,
 while IFS=',' read -r -a fields
 do
@@ -100,18 +116,8 @@ do
 		echo " ERROR: Invalid birth date format"
 	fi
 
-	# username generation with cut
-		# -d cut delimiter
-		# -f cut field selector
-		# -c cut character selector
-	first_name=$(echo "$email" | cut -d'.' -f1)
-	surname=$(echo "$email" | cut -d'@' -f1 | cut -d'.' -f2)
-	first_letter=$(echo "$surname" | cut -c1)
-
-	# sed = stream editor. ^. selects first char, U& uppercases it
-	first_name_capital=$(echo "$first_name" | sed 's/^./\U&/')
-	username="${first_letter}${first_name_capital}"
-
+	# call username generator function
+	username=$(get_username "$email")
 	echo "	Username: $username"
 
 	# check existing username before gen - &> redirects stdoutput and stderror to same destination
