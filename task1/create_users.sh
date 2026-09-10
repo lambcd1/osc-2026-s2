@@ -249,6 +249,41 @@ do
 		fi
 	fi
 
+	# set shared folder group ownership and permissions
+	if [[ -n "$shared_folder" ]]; then
+		if [[ "$shared_folder" == "/opt/staffData" ]]; then
+			folder_group="dev"
+		elif [[ "$shared_folder" == "/opt/internData" ]]; then
+			folder_group="intern"
+		fi
+
+		if sudo chown "root:$folder_group" "$shared_folder"; then
+			echo "	Shared folder group set to: $folder_group"
+		else
+			echo "	ERROR: Failed to set shared folder group"
+		fi
+
+		if sudo chmod 770 "$shared_folder"; then
+			echo "	Shared folder permissions set to 770"
+		else
+			echo "	ERROR: Failed to set shared folder permissions"
+		fi
+	fi
+
+	# create shared folder symbolic link in user's home
+	if [[ -n "$shared_folder" ]]; then
+		shared_link="/home/$username/shared"
+		if [[ -L "$shared_link" ]]; then
+			echo "	Shared link already exists: $shared_link"
+		else
+			if sudo ln -s "$shared_folder" "$shared_link"; then
+				echo "	Shared link created: $shared_link -> $shared_folder"
+			else
+				echo "	ERROR: Failed to create shared link: $shared_link"
+			fi
+		fi
+	fi
+
 done < <(tail -n +2 "$csv_file")
 
 
