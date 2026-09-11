@@ -1,0 +1,17 @@
+[2026-09-11 00:38:20] Script started
+[2026-09-11 00:38:20] Input received: ../task1
+[2026-09-11 00:38:20] SUCCESS: Source directory exists: ../task1
+[2026-09-11 00:38:20] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 00:38:20] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 00:38:20] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 00:38:20] Backup size: 8.0K
+[2026-09-11 00:38:20] SUCCESS: Backup archive passed integrity test
+[2026-09-11 00:38:20] SUCCESS: Backup contents displayed
+[2026-09-11 00:40:11] Remote destination: kali@192.168.100.129:/var/assessments/task2
+[2026-09-11 00:40:11] Remote SSH port: 22
+[2026-09-11 00:40:14] SUCCESS: Remote SSH connection established
+[2026-09-11 00:40:16] SUCCESS: Remote destination exists: /var/assessments/task2
+[2026-09-11 00:40:16] Uploading backup: backup-2026-09-11.tar.gz
+[2026-09-11 00:40:18] SUCCESS: Backup uploaded to kali@192.168.100.129:/var/assessments/task2
+[2026-09-11 00:40:21] SUCCESS: Remote backup verified: /var/assessments/task2/backup-2026-09-11.tar.gz
+[2026-09-11 00:40:21] Script completed successfully
