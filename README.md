@@ -246,3 +246,11 @@ Task 2
 - Unreachable remote server.
 - Incorrect authentication credentials.
 - Invalid remote destination directory.
+
+
+NOTE:
+        The screenshot evidence docx I have instead saved as pdf
+        This is because I do not have MS Word on my PC and I can
+        not edit or upload docx from MS Word Online to this PC 
+        or to github. However, I can export pdf from there
+        to my PC then to github.
