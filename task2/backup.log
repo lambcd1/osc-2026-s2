@@ -15,3 +15,69 @@
 [2026-09-11 00:40:18] SUCCESS: Backup uploaded to kali@192.168.100.129:/var/assessments/task2
 [2026-09-11 00:40:21] SUCCESS: Remote backup verified: /var/assessments/task2/backup-2026-09-11.tar.gz
 [2026-09-11 00:40:21] Script completed successfully
+[2026-09-11 02:07:22] Script started
+[2026-09-11 02:07:47] Input received: ../task1
+[2026-09-11 02:07:47] SUCCESS: Source directory exists: ../task1
+[2026-09-11 02:07:47] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 02:07:47] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:07:47] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:07:47] Backup size: 8.0K
+[2026-09-11 02:07:47] SUCCESS: Backup archive passed integrity test
+[2026-09-11 02:07:47] SUCCESS: Backup contents displayed
+[2026-09-11 02:08:35] Remote destination: kali@192.168.100.129:/var/assessments/task2
+[2026-09-11 02:08:35] Remote SSH port: 22
+[2026-09-11 02:09:14] SUCCESS: Remote SSH connection established
+[2026-09-11 02:09:19] SUCCESS: Remote destination exists: /var/assessments/task2
+[2026-09-11 02:09:19] Uploading backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:09:21] SUCCESS: Backup uploaded to kali@192.168.100.129:/var/assessments/task2
+[2026-09-11 02:09:25] SUCCESS: Remote backup verified: /var/assessments/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:09:25] Script completed successfully
+[2026-09-11 02:18:51] Script started
+[2026-09-11 02:18:51] Input received: /does/not/exist
+[2026-09-11 02:18:51] ERROR: Directory does not exist: /does/not/exist
+[2026-09-11 02:21:44] Script started
+[2026-09-11 02:21:52] Input received: ../task1
+[2026-09-11 02:21:52] SUCCESS: Source directory exists: ../task1
+[2026-09-11 02:21:52] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 02:21:52] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:21:52] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:21:52] Backup size: 8.0K
+[2026-09-11 02:21:52] SUCCESS: Backup archive passed integrity test
+[2026-09-11 02:21:52] SUCCESS: Backup contents displayed
+[2026-09-11 02:22:28] Remote destination: kali@192.0.2.1:/var/assessments/task2
+[2026-09-11 02:22:28] Remote SSH port: 22
+[2026-09-11 02:22:38] ERROR: Unable to connect to remote host
+[2026-09-11 02:23:46] Script started
+[2026-09-11 02:23:46] Input received: ../task1
+[2026-09-11 02:23:46] SUCCESS: Source directory exists: ../task1
+[2026-09-11 02:23:46] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 02:23:46] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:23:46] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:23:46] Backup size: 8.0K
+[2026-09-11 02:23:46] SUCCESS: Backup archive passed integrity test
+[2026-09-11 02:23:46] SUCCESS: Backup contents displayed
+[2026-09-11 02:24:19] Remote destination: wronguser@192.168.100.129:/var/assessments/task2
+[2026-09-11 02:24:19] Remote SSH port: 22
+[2026-09-11 02:24:26] ERROR: Unable to connect to remote host
+[2026-09-11 02:25:53] Script started
+[2026-09-11 02:25:53] Input received: ../task1
+[2026-09-11 02:25:53] SUCCESS: Source directory exists: ../task1
+[2026-09-11 02:25:53] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 02:25:53] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:25:53] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:25:53] Backup size: 8.0K
+[2026-09-11 02:25:53] SUCCESS: Backup archive passed integrity test
+[2026-09-11 02:25:53] SUCCESS: Backup contents displayed
+[2026-09-11 02:26:17] Remote destination: kali@192.168.100.129:/does/notexist
+[2026-09-11 02:26:17] Remote SSH port: 22
+[2026-09-11 02:26:20] SUCCESS: Remote SSH connection established
+[2026-09-11 02:26:22] ERROR: Remote destination unavailable: /does/notexist
+[2026-09-11 02:27:05] Script started
+[2026-09-11 02:27:05] Input received: ../task1
+[2026-09-11 02:27:05] SUCCESS: Source directory exists: ../task1
+[2026-09-11 02:27:05] Source directory confirmed: /home/student/ID616001-Assignment1/task1
+[2026-09-11 02:27:05] Creating backup: backup-2026-09-11.tar.gz
+[2026-09-11 02:27:05] SUCCESS: Backup created: /home/student/ID616001-Assignment1/task2/backup-2026-09-11.tar.gz
+[2026-09-11 02:27:05] Backup size: 8.0K
+[2026-09-11 02:27:05] SUCCESS: Backup archive passed integrity test
+[2026-09-11 02:27:05] SUCCESS: Backup contents displayed
