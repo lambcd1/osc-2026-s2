@@ -2,15 +2,7 @@ Operating Systems Concepts — Assignment 1
 Author Details
 Name: Cam Lamb
 Student Code: LAMBCD1
-Last Updated: 11 September 2026
-Project Structure
-assignment-directory/
-├── README.md
-├── BSA_Self_Assessment.txt
-├── task1/
-│   └── ...
-└── task2/
-    └── backup.sh
+Last Updated: 11 September 2026 13:00
 
 The project contains two shell scripts developed for Assignment 1:
 
